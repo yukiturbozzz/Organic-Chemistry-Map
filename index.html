@@ -179,6 +179,23 @@
       <h1>Organic Reaction Roadmap</h1>
       <p>Click any reaction arrow to view its detailed mechanism, worked examples, and key rules.</p>
     </div>
+    <div style="position: relative; min-width: 260px;">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search reagent or group (e.g. HX, Alkene)..." 
+        style="
+          width: 100%;
+          padding: 0.6rem 1rem;
+          border-radius: 8px;
+          border: 1px solid #334155;
+          background: #0f172a;
+          color: #f8fafc;
+          font-size: 0.9rem;
+          outline: none;
+        "
+      >
+    </div>
   </header>
 
   <!-- Flowchart Graph Container -->
@@ -394,5 +411,56 @@
     closeBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    });
+
+   // ----------------------------------------------------
+    // 4. SEARCH FUNCTIONALITY
+    // ----------------------------------------------------
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function (e) {
+      const searchTerm = e.target.value.trim().toLowerCase();
+
+      // 如果清空了输入框，重置所有节点和边
+      if (!searchTerm) {
+        network.setSelection({ nodes: [], edges: [] });
+        return;
+      }
+
+      const matchingNodes = [];
+      const matchingEdges = [];
+
+      // 1. 匹配官能团节点 (Nodes)
+      nodes.forEach(node => {
+        if (node.label.toLowerCase().includes(searchTerm)) {
+          matchingNodes.push(node.id);
+        }
+      });
+
+      // 2. 匹配反应试剂/箭头 (Edges & reactionData)
+      edges.forEach(edge => {
+        const detail = reactionData[edge.id];
+        const edgeLabel = (edge.label || '').toLowerCase();
+        const reagents = detail ? (detail.reagents || '').toLowerCase() : '';
+        const title = detail ? (detail.title || '').toLowerCase() : '';
+
+        if (edgeLabel.includes(searchTerm) || reagents.includes(searchTerm) || title.includes(searchTerm)) {
+          matchingEdges.push(edge.id);
+        }
+      });
+
+      // 3. 在图谱中高亮匹配到的节点和箭头
+      network.setSelection({
+        nodes: matchingNodes,
+        edges: matchingEdges
+      }, { unselectOther: true });
+
+      // 4. 自动拉近视角定位到匹配项
+      if (matchingNodes.length > 0 || matchingEdges.length > 0) {
+        network.focus(matchingNodes[0] || edges.get(matchingEdges[0]).from, {
+          scale: 1.2,
+          animation: { duration: 500, easingFunction: 'easeInOutQuad' }
+        });
+      }
     });
   </script>
