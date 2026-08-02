@@ -319,6 +319,19 @@
         example: "Addition of HBr to propene yields 2-bromopropane as the major product.",
         notes: "Regiochemistry & Solvent Choice: Markovnikov's rule applies—the hydrogen adds to the less substituted carbon to form the most stable carbocation intermediate (3° > 2° > 1°). CCl4 is used as a non-polar, non-nucleophilic solvent that prevents competing nucleophilic reactions and favors electrophilic addition."
       },
+      "6": {
+        title: "Carboxylation of Grignard Reagent",
+        subtitle: "Organobromide (R-Br) → Carboxylic Acid (+1 Carbon)",
+        reagents: "1. Mg, ether  |  2. CO2  |  3. H3O+",
+        image: "Grignard_Carboxylation.png", // Replace with your image filename if available
+        steps: [
+          "Grignard Formation: R-Br reacts with magnesium metal (Mg) in anhydrous ether to insert Mg into the C-Br bond, forming the organomagnesium halide (R-MgBr).",
+          "Nucleophilic Addition to CO2: The strongly nucleophilic/basic carbon of R-MgBr attacks the electrophilic carbon of carbon dioxide (O=C=O) to form a carboxylate salt (R-COO⁻ +MgBr).",
+          "Acid Workup: Aqueous acid (H3O+) protonates the carboxylate intermediate to yield the final Carboxylic Acid (R-COOH)."
+        ],
+        example: "Bromobenzene (Ph-Br) converted to benzoic acid (Ph-COOH) via phenylmagnesium bromide and dry ice (solid CO2).",
+        notes: "Scope & Substrate Rules: R can be alkyl, aryl, or vinyl. This reaction adds exactly ONE carbon atom to the original carbon skeleton. Substrates must NOT contain acidic protons (-OH, -NH2, -COOH) or electrophilic groups (carbonyls, nitriles) as Grignard reagents are strong bases and will undergo unwanted side reactions."
+      }
       
     };
 
@@ -326,13 +339,13 @@
     // 2. FLOWCHART NODES & ARROWS DEFINITION
     // ----------------------------------------------------
     const nodes = new vis.DataSet([
-      { id: 'alkane', label: 'Alkane', color: { background: '#475569', border: '#94a3b8' }, font: { color: '#fff' } },
-      { id: 'haloalkane', label: 'Halogenoalkane', color: { background: '#7c3aed', border: '#a78bfa' }, font: { color: '#fff' } },
-      { id: 'alkene', label: 'Alkene', color: { background: '#0284c7', border: '#38bdf8' }, font: { color: '#fff' } },
-      { id: 'alcohol_1', label: '1° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
-      { id: 'alcohol_2', label: '2° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
-      { id: 'carb_acid', label: 'Carboxylic Acid', color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
-      { id: 'ester', label: 'Ester', color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } }
+      { id: 'alkane', label: 'Alkane', x: -300, y: 0, color: { background: '#475569', border: '#94a3b8' }, font: { color: '#fff' } },
+      { id: 'alkene', label: 'Alkene', x: -100, y: -150, color: { background: '#0284c7', border: '#38bdf8' }, font: { color: '#fff' } },
+      { id: 'haloalkane', label: 'Halogenoalkane (R-Br)', x: -100, y: 150, color: { background: '#7c3aed', border: '#a78bfa' }, font: { color: '#fff' } },
+      { id: 'alcohol_1', label: '1° Alcohol', x: 100, y: -150, color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
+      { id: 'alcohol_2', label: '2° Alcohol', x: 100, y: -50, color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
+      { id: 'carb_acid', label: 'Carboxylic Acid', x: 300, y: 0, color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
+      { id: 'ester', label: 'Ester', x: 500, y: 0, color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } }
     ]);
 
     const edges = new vis.DataSet([
@@ -341,6 +354,7 @@
       { id: '2', from: 'alkene', to: 'alcohol_2', label: 'H2SO4 or H3PO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '5', from: 'alkene', to: 'haloalkane', label: 'HX in CCl4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '6', from: 'haloalkane', to: 'carb_acid', label: '1. Mg | 2. CO2 | 3. H3O+', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
