@@ -273,6 +273,20 @@
         ],
         example: "Reaction of ethanoic acid with ethanol to produce ethyl ethanoate and water.",
         notes: "Reversible equilibrium reaction. Driven to completion by adding excess alcohol or removing water via a Dean-Stark trap."
+      },
+      "4": {
+        title: "Free Radical Substitution",
+        subtitle: "Alkane → Halogenoalkane",
+        reagents: "+Cl2 (or Br2), UV Light",
+        image: "free_radical_sub.png", // Replace with your image filename when ready
+        steps: [
+          "Initiation: Homolytic fission of the halogen molecule (e.g., Cl2) by UV light to form two reactive chlorine free radicals (Cl•).",
+          "Propagation (Step 1): A chlorine radical abstracts a hydrogen atom from the alkane, forming HCl and an alkyl radical (e.g., •CH3).",
+          "Propagation (Step 2): The alkyl radical reacts with another Cl2 molecule, yielding the halogenoalkane product and regenerating a Cl• radical to continue the chain.",
+          "Termination: Two free radicals collide and combine to form a stable molecule, ending the chain reaction (e.g., •CH3 + Cl• → CH3Cl, or •CH3 + •CH3 → C2H6)."
+        ],
+        example: "Chlorination of methane (CH4 + Cl2 → CH3Cl + HCl) under ultraviolet light.",
+        notes: "Regiochemistry & Selectivity: Bromination is significantly more selective than chlorination (attaching preferentially to 3° > 2° > 1° carbons). Free radical substitution often leads to a mixture of mono- and poly-substituted products if excess halogen is present."
       }
     };
 
@@ -285,12 +299,15 @@
       { id: 'alcohol_2', label: '2° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
       { id: 'carb_acid', label: 'Carboxylic Acid', color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
       { id: 'ester', label: 'Ester', color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } }
+      { id: 'alkane', label: 'Alkane', color: { background: '#475569', border: '#94a3b8' }, font: { color: '#fff' } },
+      { id: 'haloalkane', label: 'Halogenoalkane', color: { background: '#7c3aed', border: '#a78bfa' }, font: { color: '#fff' } },
     ]);
 
     const edges = new vis.DataSet([
       { id: '1', from: 'alcohol_1', to: 'carb_acid', label: 'H2CrO4 / H3O+', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '2', from: 'alkene', to: 'alcohol_2', label: 'H3O+, H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } }
+      { id: '4', from: 'alkane', to: 'haloalkane', label: '+Cl2, UV light', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
