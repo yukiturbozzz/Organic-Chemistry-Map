@@ -317,6 +317,19 @@
         example: "Addition of HBr to propene yields 2-bromopropane as the major product.",
         notes: "Regiochemistry & Solvent Choice: Markovnikov's rule applies—the hydrogen adds to the less substituted carbon to form the most stable carbocation intermediate (3° > 2° > 1°). CCl4 is used as a non-polar, non-nucleophilic solvent that prevents competing nucleophilic reactions and favors electrophilic addition."
       },
+      "6": {
+        title: "Acid-Catalyzed Hydration of Alkenes",
+        subtitle: "Alkene → Alcohol (Markovnikov)",
+        reagents: "H2O, H2SO4 (or H3PO4)",
+        image: "Hydration.png", // Replace with your image filename if available
+        steps: [
+          "Protonation: The alkene double bond acts as a nucleophile, attacking a proton (H+) supplied by H2SO4/H3PO4 to generate the most stable carbocation intermediate.",
+          "Nucleophilic Attack: Water (H2O) attacks the electrophilic carbocation center, forming an oxonium ion.",
+          "Deprotonation: A second water molecule abstracts a proton from the oxonium ion to yield the alcohol product and regenerate the acid catalyst."
+        ],
+        example: "Hydration of 2-methylpropene with aqueous H2SO4 yields 2-methylpropan-2-ol (tert-butanol).",
+        notes: "Regiochemistry: Follows Markovnikov's rule—the -OH group attaches to the most substituted carbon atom to proceed via the most stable carbocation intermediate (3° > 2° > 1°). Beware of potential carbocation rearrangements (hydride or methyl shifts)."
+      },
     };
 
     // ----------------------------------------------------
@@ -338,6 +351,7 @@
       { id: '2', from: 'alkene', to: 'alcohol_2', label: 'H3O+, H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '5', from: 'alkene', to: 'haloalkane', label: 'HX in CCl4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '6', from: 'alkene', to: 'alcohol_2', label: 'H2O, H2SO4/H3PO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
