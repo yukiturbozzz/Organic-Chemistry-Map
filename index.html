@@ -331,6 +331,19 @@
         ],
         example: "Bromobenzene (Ph-Br) converted to benzoic acid (Ph-COOH) via phenylmagnesium bromide and dry ice (solid CO2).",
         notes: "Scope & Substrate Rules: R can be alkyl, aryl, or vinyl. This reaction adds exactly ONE carbon atom to the original carbon skeleton. Substrates must NOT contain acidic protons (-OH, -NH2, -COOH) or electrophilic groups (carbonyls, nitriles) as Grignard reagents are strong bases and will undergo unwanted side reactions."
+      },
+      "7": {
+        title: "Synthesis of Acid Chlorides",
+        subtitle: "Carboxylic Acid → Acid Chloride",
+        reagents: "SOCl2, Δ",
+        image: "Thionyl_Chloride_Synthesis.png", // Replace with your image filename if available
+        steps: [
+          "Nucleophilic Attack: The carboxylic acid oxygen attacks the sulfur atom of thionyl chloride (SOCl2), displacing a chloride ion.",
+          "Intermolecular Chlorination: The generated chloride ion (Cl⁻) attacks the carbonyl carbon, forming a tetrahedral intermediate.",
+          "Collapse & Gas Evolution: The tetrahedral intermediate collapses, reforming the C=O double bond, cleaving the C-O bond, and liberating SO2 gas and HCl."
+        ],
+        example: "Conversion of ethanoic acid (acetic acid) into ethanoyl chloride (acetyl chloride) using SOCl2 and gentle heat.",
+        notes: "Compatibility & Side Reactions: Generates gaseous HCl and SO2 as byproducts. Substrates MUST NOT contain alkenes (will undergo electrophilic addition of HCl) or ethers (susceptible to acid-catalyzed cleavage)."
       }
       
     };
@@ -345,7 +358,8 @@
       { id: 'alcohol_1', label: '1° Alcohol', x: 100, y: -150, color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
       { id: 'alcohol_2', label: '2° Alcohol', x: 100, y: -50, color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
       { id: 'carb_acid', label: 'Carboxylic Acid', x: 300, y: 0, color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
-      { id: 'ester', label: 'Ester', x: 500, y: 0, color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } }
+      { id: 'ester', label: 'Ester', x: 500, y: 0, color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } },
+      { id: 'acid_chloride', label: 'Acid Chloride', x: 300, y: 180, color: { background: '#dc2626', border: '#f87171' }, font: { color: '#fff' } },
     ]);
 
     const edges = new vis.DataSet([
@@ -355,6 +369,7 @@
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '5', from: 'alkene', to: 'haloalkane', label: 'HX in CCl4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '6', from: 'haloalkane', to: 'carb_acid', label: '1. Mg, Et2O | 2. CO2 | 3. H+/H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '7', from: 'carb_acid', to: 'acid_chloride', label: 'SOCl2, Δ', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
