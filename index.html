@@ -358,6 +358,20 @@
         example: "Conversion of an acid-sensitive alkene-containing carboxylic acid into an acid chloride in benzene with Na2CO3.",
         notes: "Functional Group Tolerance: Much gentler than SOCl2! Because free HCl is not generated, this reaction is tolerant to acid-sensitive functional groups like alkenes, ethers, acetals, and silyl protecting groups."
       },
+      "9": {
+        title: "Synthesis of Acid Anhydrides",
+        subtitle: "Acid Chloride + Carboxylic Acid → Acid Anhydride",
+        reagents: "R'-COOH, Et3N",
+        image: "Anhydride_Synthesis.png", // Replace with your image filename if available
+        steps: [
+          "Deprotonation / Base Activation: Triethylamine (Et3N) deprotonates the carboxylic acid (R'-COOH) to generate a reactive carboxylate nucleophile (R'-COO⁻).",
+          "Nucleophilic Acyl Addition: The carboxylate oxygen attacks the carbonyl carbon of the acid chloride, forming a tetrahedral intermediate.",
+          "Elimination of Chloride: The tetrahedral intermediate collapses, reforming the carbonyl C=O bond and displacing chloride (Cl⁻).",
+          "Precipitation: Et3N scavenges HCl to form triethylammonium chloride salt (Et3NH+ Cl⁻), driving the reaction to completion."
+        ],
+        example: "Acetyl chloride reacting with propanoic acid in the presence of Et3N to produce acetic propionic anhydride.",
+        notes: "Scope & Selectivity: Excellent method for preparing both symmetrical (R = R') and mixed/unsymmetrical (R ≠ R') anhydrides under mild, non-aqueous conditions."
+      },
       
     };
 
@@ -373,6 +387,7 @@
       { id: 'carb_acid', label: 'Carboxylic Acid', x: 300, y: 0, color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
       { id: 'ester', label: 'Ester', x: 500, y: 0, color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } },
       { id: 'acid_chloride', label: 'Acid Chloride', x: 300, y: 180, color: { background: '#dc2626', border: '#f87171' }, font: { color: '#fff' } },
+      { id: 'anhydride', label: 'Acid Anhydride', x: 500, y: 180, color: { background: '#c026d3', border: '#e879f9' }, font: { color: '#fff' } },
     ]);
 
     const edges = new vis.DataSet([
@@ -384,6 +399,7 @@
       { id: '6', from: 'haloalkane', to: 'carb_acid', label: '1. Mg, Et2O | 2. CO2 | 3. H+/H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '7', from: 'carb_acid', to: 'acid_chloride', label: 'SOCl2, Δ', arrows: 'to', smooth: { type: 'curvedCW', roundness: 0.2 }, color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '8', from: 'carb_acid', to: 'acid_chloride', label: '(COCl)2, Na2CO3', arrows: 'to', smooth: { type: 'curvedCCW', roundness: 0.2 }, color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '9', from: 'acid_chloride', to: 'anhydride', label: 'R-COOH, Et3N', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
