@@ -344,7 +344,20 @@
         ],
         example: "Conversion of ethanoic acid (acetic acid) into ethanoyl chloride (acetyl chloride) using SOCl2 and gentle heat.",
         notes: "Compatibility & Side Reactions: Generates gaseous HCl and SO2 as byproducts. Substrates MUST NOT contain alkenes (will undergo electrophilic addition of HCl) or ethers (susceptible to acid-catalyzed cleavage)."
-      }
+      },
+      "8": {
+        title: "Synthesis of Acid Chlorides via Oxalyl Chloride",
+        subtitle: "Carboxylic Acid → Acid Chloride (Gentle Conditions)",
+        reagents: "(COCl)2, Na2CO3, benzene",
+        image: "Oxalyl_Chloride_Synthesis.png", // Replace with your image filename if available
+        steps: [
+          "Nucleophilic Attack: The carboxylic acid attacks oxalyl chloride ((COCl)2), displacing a chloride ion to form a chlorosulfonium-like reactive intermediate.",
+          "Chlorination & Gas Evolution: The displaced chloride attacks the carbonyl carbon, leading to fragmentation into carbon monoxide (CO gas), carbon dioxide (CO2 gas), and the acid chloride product.",
+          "Acid Neutralization: In situ Na2CO3 neutralizes trace acid without generating free HCl gas, preventing unwanted side reactions."
+        ],
+        example: "Conversion of an acid-sensitive alkene-containing carboxylic acid into an acid chloride in benzene with Na2CO3.",
+        notes: "Functional Group Tolerance: Much gentler than SOCl2! Because free HCl is not generated, this reaction is tolerant to acid-sensitive functional groups like alkenes, ethers, acetals, and silyl protecting groups."
+      },
       
     };
 
@@ -369,7 +382,8 @@
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '5', from: 'alkene', to: 'haloalkane', label: 'HX in CCl4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '6', from: 'haloalkane', to: 'carb_acid', label: '1. Mg, Et2O | 2. CO2 | 3. H+/H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
-      { id: '7', from: 'carb_acid', to: 'acid_chloride', label: 'SOCl2, Δ', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '7', from: 'carb_acid', to: 'acid_chloride', label: 'SOCl2, Δ', arrows: 'to', smooth: { type: 'curvedCW', roundness: 0.2 }, color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '8', from: 'carb_acid', to: 'acid_chloride', label: '(COCl)2, Na2CO3', arrows: 'to', smooth: { type: 'curvedCCW', roundness: 0.2 }, color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
