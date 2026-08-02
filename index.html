@@ -228,7 +228,7 @@
     </div>
   </div>
 
-  <script>
+ <script>
     // ----------------------------------------------------
     // 1. DATABASE OF REACTIONS & MECHANISMS
     // ----------------------------------------------------
@@ -237,7 +237,7 @@
         title: "Primary Alcohol to Carboxylic Acid",
         subtitle: "Primary Alcohol → Carboxylic Acid (Full Oxidation)",
         reagents: "H2CrO4 (Chromic Acid) or KMnO4 / H3O+",
-        image: "", // Put image filename here later, e.g., "images/alcohol_to_acid.png"
+        image: "", 
         steps: [
           "Nucleophilic attack of the alcohol oxygen onto the chromium center.",
           "Loss of a proton and leaving group to form a neutral chromate ester intermediate.",
@@ -277,8 +277,8 @@
       "4": {
         title: "Free Radical Substitution",
         subtitle: "Alkane → Halogenoalkane",
-        reagents: "+Cl2 (or Br2), UV Light",
-        image: "free_radical_sub.png", // Replace with your image filename when ready
+        reagents: "+Cl2, UV light",
+        image: "", // Put image filename here later, e.g. "free_radical_sub.png"
         steps: [
           "Initiation: Homolytic fission of the halogen molecule (e.g., Cl2) by UV light to form two reactive chlorine free radicals (Cl•).",
           "Propagation (Step 1): A chlorine radical abstracts a hydrogen atom from the alkane, forming HCl and an alkyl radical (e.g., •CH3).",
@@ -294,20 +294,20 @@
     // 2. FLOWCHART NODES & ARROWS DEFINITION
     // ----------------------------------------------------
     const nodes = new vis.DataSet([
+      { id: 'alkane', label: 'Alkane', color: { background: '#475569', border: '#94a3b8' }, font: { color: '#fff' } },
+      { id: 'haloalkane', label: 'Halogenoalkane', color: { background: '#7c3aed', border: '#a78bfa' }, font: { color: '#fff' } },
       { id: 'alkene', label: 'Alkene', color: { background: '#0284c7', border: '#38bdf8' }, font: { color: '#fff' } },
       { id: 'alcohol_1', label: '1° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
       { id: 'alcohol_2', label: '2° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
       { id: 'carb_acid', label: 'Carboxylic Acid', color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
       { id: 'ester', label: 'Ester', color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } }
-      { id: 'alkane', label: 'Alkane', color: { background: '#475569', border: '#94a3b8' }, font: { color: '#fff' } },
-      { id: 'haloalkane', label: 'Halogenoalkane', color: { background: '#7c3aed', border: '#a78bfa' }, font: { color: '#fff' } },
     ]);
 
     const edges = new vis.DataSet([
+      { id: '4', from: 'alkane', to: 'haloalkane', label: '+Cl2, UV light', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '1', from: 'alcohol_1', to: 'carb_acid', label: 'H2CrO4 / H3O+', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '2', from: 'alkene', to: 'alcohol_2', label: 'H3O+, H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } }
-      { id: '4', from: 'alkane', to: 'haloalkane', label: '+Cl2, UV light', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
@@ -383,5 +383,3 @@
       if (e.target === modalOverlay) modalOverlay.classList.remove('active');
     });
   </script>
-</body>
-</html>
