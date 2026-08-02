@@ -370,9 +370,9 @@
         font: { size: 12, color: '#f8fafc', strokeWidth: 4, strokeColor: '#0f172a' },
         smooth: { type: 'cubicBezier' }
       },
-      physics: {
-        solver: 'forceAtlas2Based',
-        forceAtlas2Based: { springLength: 120 }
+      physics: false,
+      layout: {
+        improvedLayout: true
       }
     };
     const network = new vis.Network(container, data, options);
