@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organic Chemistry Reaction Visualizer</title>
+  <!-- Vis Network Library for Flowchart Graph -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: #1e293b;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      color: #38bdf8;
+    }
+
+    header p {
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    #mynetwork {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background-color: #0f172a;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #f8fafc;
+    }
+
+    .modal-title {
+      color: #38bdf8;
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-subtitle {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: #0369a1;
+      color: #e0f2fe;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section h3 {
+      font-size: 1.1rem;
+      color: #f1f5f9;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      min-height: 220px;
+      background: #0f172a;
+      border: 2px dashed #475569;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #64748b;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .image-placeholder img {
+      max-width: 100%;
+      border-radius: 6px;
+    }
+
+    .steps-list {
+      padding-left: 1.25rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .notes-box {
+      background: #0f172a;
+      border-left: 4px solid #f59e0b;
+      padding: 1rem;
+      border-radius: 0 8px 8px 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Organic Reaction Roadmap</h1>
+      <p>Click any reaction arrow to view its detailed mechanism, worked examples, and key rules.</p>
+    </div>
+  </header>
+
+  <!-- Flowchart Graph Container -->
+  <div id="mynetwork"></div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <h2 class="modal-title" id="modalTitle">Reaction Detail</h2>
+      <div class="modal-subtitle" id="modalSubtitle">Transformation Summary</div>
+      <span class="badge" id="modalReagents">Reagent Info</span>
+
+      <!-- Mechanism Photo Section -->
+      <div class="section">
+        <h3>1. Reaction Mechanism Diagram</h3>
+        <div class="image-placeholder" id="mechanismImageContainer">
+          <p>📷 <strong>Photo Placeholder</strong></p>
+          <p style="font-size: 0.8rem; margin-top: 0.5rem;">Replace this with your mechanism photo in the data code!</p>
+        </div>
+      </div>
+
+      <!-- Arrow Pushing Breakdown -->
+      <div class="section">
+        <h3>2. Step-by-Step Arrow Pushing</h3>
+        <ol class="steps-list" id="modalSteps">
+          <!-- Filled dynamically -->
+        </ol>
+      </div>
+
+      <!-- Worked Example -->
+      <div class="section">
+        <h3>3. Specific Worked Example</h3>
+        <div class="notes-box" style="border-left-color: #38bdf8;" id="modalExample">
+          <!-- Filled dynamically -->
+        </div>
+      </div>
+
+      <!-- Regio/Stereochemistry Notes -->
+      <div class="section">
+        <h3>4. Key Selectivity & Rules</h3>
+        <div class="notes-box" id="modalNotes">
+          <!-- Filled dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------------------------------
+    // 1. DATABASE OF REACTIONS & MECHANISMS
+    // ----------------------------------------------------
+    const reactionData = {
+      "1": {
+        title: "Primary Alcohol to Carboxylic Acid",
+        subtitle: "Primary Alcohol → Carboxylic Acid (Full Oxidation)",
+        reagents: "H2CrO4 (Chromic Acid) or KMnO4 / H3O+",
+        image: "", // Put image filename here later, e.g., "images/alcohol_to_acid.png"
+        steps: [
+          "Nucleophilic attack of the alcohol oxygen onto the chromium center.",
+          "Loss of a proton and leaving group to form a neutral chromate ester intermediate.",
+          "Deprotonation of the alpha-hydrogen by water, driving C=O double bond formation (elimination step) to form an Aldehyde.",
+          "Hydrate formation in aqueous acid followed by secondary oxidation yielding the Carboxylic Acid."
+        ],
+        example: "Conversion of 1-propanol into propanoic acid using Jones reagent (CrO3, H2SO4, H2O).",
+        notes: "Regiochemistry/Selectivity: Requires strong aqueous oxidants. If you wish to stop at the Aldehyde stage, use anhydrous conditions with PCC or Dess-Martin Periodinane (DMP) instead."
+      },
+      "2": {
+        title: "Alkene to Alcohol (Hydration)",
+        subtitle: "Alkene → Secondary/Tertiary Alcohol",
+        reagents: "H3O+ / H2O (Acid-Catalyzed Hydration)",
+        image: "",
+        steps: [
+          "Protonation of the alkene double bond by hydronium to form the most stable carbocation intermediate.",
+          "Nucleophilic attack of water on the carbocation center.",
+          "Deprotonation of the oxonium ion by another water molecule to yield the alcohol."
+        ],
+        example: "Conversion of propene into 2-propanol.",
+        notes: "Markovnikov addition rules apply (OH attaches to the most substituted carbon). Beware of carbocation rearrangements (1,2-hydride or alkyl shifts)."
+      },
+      "3": {
+        title: "Carboxylic Acid to Ester",
+        subtitle: "Carboxylic Acid + Alcohol → Ester (Fischer Esterification)",
+        reagents: "R-OH, H2SO4 (catalytic), Δ",
+        image: "",
+        steps: [
+          "Protonation of the carbonyl oxygen to increase electrophilicity.",
+          "Nucleophilic attack by the alcohol oxygen onto the carbonyl carbon.",
+          "Proton transfer steps converting one -OH group into a good leaving group (-OH2+).",
+          "Elimination of water and reformation of the C=O bond, followed by final deprotonation."
+        ],
+        example: "Reaction of ethanoic acid with ethanol to produce ethyl ethanoate and water.",
+        notes: "Reversible equilibrium reaction. Driven to completion by adding excess alcohol or removing water via a Dean-Stark trap."
+      }
+    };
+
+    // ----------------------------------------------------
+    // 2. FLOWCHART NODES & ARROWS DEFINITION
+    // ----------------------------------------------------
+    const nodes = new vis.DataSet([
+      { id: 'alkene', label: 'Alkene', color: { background: '#0284c7', border: '#38bdf8' }, font: { color: '#fff' } },
+      { id: 'alcohol_1', label: '1° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
+      { id: 'alcohol_2', label: '2° Alcohol', color: { background: '#059669', border: '#34d399' }, font: { color: '#fff' } },
+      { id: 'carb_acid', label: 'Carboxylic Acid', color: { background: '#e11d48', border: '#fb7185' }, font: { color: '#fff' } },
+      { id: 'ester', label: 'Ester', color: { background: '#d97706', border: '#fbbf24' }, font: { color: '#fff' } }
+    ]);
+
+    const edges = new vis.DataSet([
+      { id: '1', from: 'alcohol_1', to: 'carb_acid', label: 'H2CrO4 / H3O+', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '2', from: 'alkene', to: 'alcohol_2', label: 'H3O+, H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
+      { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } }
+    ]);
+
+    // Render Vis Network
+    const container = document.getElementById('mynetwork');
+    const data = { nodes: nodes, edges: edges };
+    const options = {
+      nodes: {
+        shape: 'box',
+        margin: 12,
+        borderRadius: 8,
+        borderWidth: 2,
+        font: { size: 16, face: 'sans-serif' }
+      },
+      edges: {
+        width: 2,
+        font: { size: 12, color: '#f8fafc', strokeWidth: 4, strokeColor: '#0f172a' },
+        smooth: { type: 'cubicBezier' }
+      },
+      physics: {
+        solver: 'forceAtlas2Based',
+        forceAtlas2Based: { springLength: 120 }
+      }
+    };
+    const network = new vis.Network(container, data, options);
+
+    // ----------------------------------------------------
+    // 3. INTERACTIVE MODAL LOGIC
+    // ----------------------------------------------------
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeBtn = document.getElementById('closeBtn');
+
+    network.on("click", function (params) {
+      if (params.edges.length > 0 && params.nodes.length === 0) {
+        const edgeId = params.edges[0];
+        const detail = reactionData[edgeId];
+
+        if (detail) {
+          document.getElementById('modalTitle').textContent = detail.title;
+          document.getElementById('modalSubtitle').textContent = detail.subtitle;
+          document.getElementById('modalReagents').textContent = 'Reagents: ' + detail.reagents;
+
+          // Steps
+          const stepsContainer = document.getElementById('modalSteps');
+          stepsContainer.innerHTML = '';
+          detail.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepsContainer.appendChild(li);
+          });
+
+          // Example & Notes
+          document.getElementById('modalExample').textContent = detail.example;
+          document.getElementById('modalNotes').textContent = detail.notes;
+
+          // Image handling
+          const imgContainer = document.getElementById('mechanismImageContainer');
+          if (detail.image) {
+            imgContainer.innerHTML = `<img src="${detail.image}" alt="${detail.title}">`;
+          } else {
+            imgContainer.innerHTML = `
+              <p>📷 <strong>Photo Placeholder</strong></p>
+              <p style="font-size: 0.8rem; margin-top: 0.5rem;">Add image path to reactionData["${edgeId}"].image in the script!</p>
+            `;
+          }
+
+          modalOverlay.classList.add('active');
+        }
+      }
+    });
+
+    closeBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    });
+  </script>
+</body>
+</html>
