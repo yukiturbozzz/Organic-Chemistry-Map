@@ -359,9 +359,16 @@
         font: { size: 12, color: '#f8fafc', strokeWidth: 4, strokeColor: '#0f172a' },
         smooth: { type: 'cubicBezier' }
       },
-      physics: false,
-      layout: {
-        improvedLayout: true
+      physics: {
+        solver: 'forceAtlas2Based',
+        forceAtlas2Based: { 
+          springLength: 150,
+          gravitationalConstant: -50
+        },
+        stabilization: {
+          enabled: true,
+          iterations: 200
+        }
       }
     };
     const network = new vis.Network(container, data, options);
