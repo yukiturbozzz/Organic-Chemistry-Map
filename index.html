@@ -288,6 +288,18 @@
         example: "Chlorination of methane (CH4 + Cl2 → CH3Cl + HCl) under ultraviolet light.",
         notes: "Regiochemistry & Selectivity: Bromination is significantly more selective than chlorination (attaching preferentially to 3° > 2° > 1° carbons). Free radical substitution often leads to a mixture of mono- and poly-substituted products if excess halogen is present."
       }
+      "5": {
+        title: "Hydrohalogenation (Electrophilic Addition)",
+        subtitle: "Alkene → Halogenoalkane",
+        reagents: "HX (e.g., HCl, HBr, HI) in CCl4",
+        image: "", // Put image filename here later, e.g. "hydrohalogenation.png"
+        steps: [
+          "Electrophilic Attack: The electron-rich double bond attacks the electrophilic hydrogen of HX, breaking the H-X bond and forming a carbocation intermediate.",
+          "Nucleophilic Attack: The halide ion (X⁻) attacks the positively charged carbocation to form the alkyl halide product."
+        ],
+        example: "Addition of HBr to propene yields 2-bromopropane as the major product.",
+        notes: "Regiochemistry & Solvent Choice: Markovnikov's rule applies—the hydrogen adds to the less substituted carbon to form the most stable carbocation intermediate (3° > 2° > 1°). CCl4 is used as a non-polar, non-nucleophilic solvent that prevents competing nucleophilic reactions and favors electrophilic addition."
+      },
     };
 
     // ----------------------------------------------------
@@ -308,6 +320,7 @@
       { id: '1', from: 'alcohol_1', to: 'carb_acid', label: 'H2CrO4 / H3O+', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '2', from: 'alkene', to: 'alcohol_2', label: 'H3O+, H2O', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
       { id: '3', from: 'carb_acid', to: 'ester', label: 'R-OH, H2SO4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } }
+      { id: '5', from: 'alkene', to: 'haloalkane', label: 'HX in CCl4', arrows: 'to', color: { color: '#94a3b8', highlight: '#38bdf8' } },
     ]);
 
     // Render Vis Network
